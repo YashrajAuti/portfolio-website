@@ -1,0 +1,421 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ======================== Custom Base Styles ======================== */
+:root {
+  --neon-cyan: #00f5ff;
+  --neon-blue: #4facfe;
+  --neon-purple: #a855f7;
+  --navy-950: #020817;
+  --navy-900: #030d1f;
+  --navy-800: #061429;
+  --glass-bg: rgba(6, 20, 41, 0.6);
+  --glass-border: rgba(0, 245, 255, 0.1);
+}
+
+@layer base {
+  body {
+    @apply bg-[#020817] text-white font-sans overflow-x-hidden;
+    background-image:
+      radial-gradient(ellipse at 20% 50%, rgba(0, 245, 255, 0.05) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 20%, rgba(79, 172, 254, 0.05) 0%, transparent 50%),
+      linear-gradient(rgba(0, 245, 255, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 245, 255, 0.02) 1px, transparent 1px);
+    background-size: 100% 100%, 100% 100%, 60px 60px, 60px 60px;
+  }
+
+  ::selection {
+    background: rgba(0, 245, 255, 0.3);
+    color: #ffffff;
+  }
+}
+
+/* ======================== Custom Cursor ======================== */
+.cursor-dot {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  background: var(--neon-cyan);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.1s ease;
+  box-shadow: 0 0 10px var(--neon-cyan), 0 0 20px var(--neon-cyan);
+}
+
+.cursor-ring {
+  position: fixed;
+  width: 36px;
+  height: 36px;
+  border: 1.5px solid rgba(0, 245, 255, 0.6);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: all 0.15s ease-out;
+}
+
+.cursor-ring.hovering {
+  width: 56px;
+  height: 56px;
+  border-color: rgba(0, 245, 255, 1);
+  background: rgba(0, 245, 255, 0.05);
+}
+
+/* ======================== Scrollbar ======================== */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #020817;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #00f5ff, #4facfe);
+  border-radius: 3px;
+}
+
+/* ======================== Glass Morphism ======================== */
+@layer components {
+  .glass-card {
+    @apply relative rounded-2xl border;
+    background: rgba(6, 20, 41, 0.6);
+    border-color: rgba(0, 245, 255, 0.12);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+
+  .glass-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(135deg, rgba(0, 245, 255, 0.05) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  .neon-text {
+    color: var(--neon-cyan);
+    text-shadow: 0 0 10px rgba(0, 245, 255, 0.8), 0 0 30px rgba(0, 245, 255, 0.4);
+  }
+
+  .neon-border {
+    border: 1px solid rgba(0, 245, 255, 0.4);
+    box-shadow: 0 0 20px rgba(0, 245, 255, 0.1), inset 0 0 20px rgba(0, 245, 255, 0.05);
+  }
+
+  .btn-primary {
+    @apply relative px-8 py-3 rounded-full font-semibold text-sm tracking-widest uppercase overflow-hidden transition-all duration-300;
+    background: linear-gradient(135deg, #00f5ff, #4facfe);
+    color: #020817;
+    box-shadow: 0 0 30px rgba(0, 245, 255, 0.4), 0 0 60px rgba(0, 245, 255, 0.1);
+  }
+
+  .btn-primary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #4facfe, #a855f7);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .btn-primary:hover::before {
+    opacity: 1;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 50px rgba(0, 245, 255, 0.6), 0 0 100px rgba(0, 245, 255, 0.2);
+  }
+
+  .btn-primary span {
+    position: relative;
+    z-index: 1;
+  }
+
+  .btn-outline {
+    @apply relative px-8 py-3 rounded-full font-semibold text-sm tracking-widest uppercase transition-all duration-300;
+    border: 1.5px solid rgba(0, 245, 255, 0.6);
+    color: #00f5ff;
+    background: transparent;
+  }
+
+  .btn-outline:hover {
+    background: rgba(0, 245, 255, 0.1);
+    border-color: rgba(0, 245, 255, 1);
+    box-shadow: 0 0 30px rgba(0, 245, 255, 0.3);
+    transform: translateY(-2px);
+  }
+
+  .section-title {
+    @apply text-4xl md:text-5xl font-bold text-center mb-4;
+    background: linear-gradient(135deg, #ffffff 0%, #00f5ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .section-subtitle {
+    @apply text-center text-slate-400 mb-16 max-w-2xl mx-auto;
+  }
+
+  .glow-line {
+    @apply w-24 h-1 mx-auto rounded-full mb-4;
+    background: linear-gradient(90deg, transparent, #00f5ff, transparent);
+    box-shadow: 0 0 20px rgba(0, 245, 255, 0.6);
+  }
+}
+
+/* ======================== Profile Ring Animation ======================== */
+.profile-ring {
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg,
+      #00f5ff,
+      #4facfe,
+      #a855f7,
+      #00f5ff);
+  animation: rotate-ring 3s linear infinite;
+  z-index: -1;
+}
+
+@keyframes rotate-ring {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.profile-ring::after {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  border-radius: 50%;
+  background: #030d1f;
+}
+
+/* ======================== Skill Bar Animation ======================== */
+.skill-bar {
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
+
+.skill-bar-fill {
+  height: 100%;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #00f5ff, #4facfe);
+  box-shadow: 0 0 10px rgba(0, 245, 255, 0.6);
+  transform-origin: left;
+  animation: fill-bar 1.5s ease-out forwards;
+}
+
+@keyframes fill-bar {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* ======================== Particle Floating ======================== */
+.particle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: rgba(0, 245, 255, 0.6);
+  border-radius: 50%;
+  animation: particle-float linear infinite;
+  box-shadow: 0 0 6px rgba(0, 245, 255, 0.8);
+}
+
+@keyframes particle-float {
+  0% {
+    transform: translateY(100vh) rotate(0deg);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  90% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(-10vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+/* ======================== Nav Styles ======================== */
+.nav-link {
+  @apply relative text-slate-300 text-sm font-medium tracking-wide transition-colors duration-300;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 1.5px;
+  background: linear-gradient(90deg, #00f5ff, #4facfe);
+  transition: width 0.3s ease;
+  box-shadow: 0 0 10px rgba(0, 245, 255, 0.6);
+}
+
+.nav-link:hover {
+  color: #00f5ff;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+.nav-link.active {
+  color: #00f5ff;
+}
+
+.nav-link.active::after {
+  width: 100%;
+}
+
+/* ======================== Project Card ======================== */
+.project-card {
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.project-card:hover {
+  transform: translateY(-12px);
+  box-shadow: 0 30px 80px rgba(0, 245, 255, 0.2), 0 0 40px rgba(0, 245, 255, 0.1), 0 0 1px rgba(0, 245, 255, 0.5);
+}
+
+/* ======================== Skill Card ======================== */
+.skill-card {
+  transition: all 0.3s ease;
+}
+
+.skill-card:hover {
+  transform: translateY(-8px) scale(1.05);
+  box-shadow: 0 20px 50px rgba(0, 245, 255, 0.2);
+  border-color: rgba(0, 245, 255, 0.4) !important;
+}
+
+/* ======================== Social Icon ======================== */
+.social-icon {
+  transition: all 0.3s ease;
+  color: #94a3b8;
+}
+
+.social-icon:hover {
+  color: #00f5ff;
+  transform: translateY(-4px);
+  filter: drop-shadow(0 0 10px rgba(0, 245, 255, 0.8));
+}
+
+/* ======================== Typing Cursor ======================== */
+.typing-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  background: #00f5ff;
+  margin-left: 2px;
+  vertical-align: middle;
+  box-shadow: 0 0 10px rgba(0, 245, 255, 0.8);
+  animation: cursor-blink 1s step-end infinite;
+}
+
+@keyframes cursor-blink {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+}
+
+/* ======================== Section Transitions ======================== */
+.section-fade {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.section-fade.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ======================== Certificate Card ======================== */
+.cert-card {
+  transition: all 0.4s ease;
+}
+
+.cert-card:hover {
+  transform: translateY(-10px) rotateX(5deg);
+  box-shadow: 0 25px 60px rgba(0, 245, 255, 0.2);
+}
+
+/* ======================== Contact Form ======================== */
+.form-input {
+  @apply w-full px-5 py-4 rounded-xl text-white placeholder-slate-500 text-sm outline-none transition-all duration-300;
+  background: rgba(6, 20, 41, 0.8);
+  border: 1.5px solid rgba(0, 245, 255, 0.1);
+}
+
+.form-input:focus {
+  border-color: rgba(0, 245, 255, 0.5);
+  box-shadow: 0 0 20px rgba(0, 245, 255, 0.1), inset 0 0 20px rgba(0, 245, 255, 0.03);
+}
+
+/* ======================== Gradient Text ======================== */
+.gradient-text {
+  background: linear-gradient(135deg, #00f5ff 0%, #4facfe 50%, #a855f7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ======================== Hero Section ======================== */
+.hero-bg {
+  background:
+    radial-gradient(ellipse at 30% 40%, rgba(0, 245, 255, 0.07) 0%, transparent 60%),
+    radial-gradient(ellipse at 70% 60%, rgba(79, 172, 254, 0.07) 0%, transparent 60%),
+    radial-gradient(ellipse at 50% 100%, rgba(168, 85, 247, 0.05) 0%, transparent 60%);
+}
+
+/* ======================== Animated border ======================== */
+.animated-border {
+  position: relative;
+}
+
+.animated-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, #00f5ff, #4facfe, #a855f7, #00f5ff);
+  background-size: 300% 300%;
+  animation: gradient-x 4s ease infinite;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
