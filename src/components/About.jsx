@@ -127,15 +127,26 @@ export default function About() {
               transition={{ duration: 0.6, delay: 0.7 }}
               className="glass-card p-6"
             >
-              <div className="grid grid-cols-4 gap-4 text-center">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-4 text-center">
                 {stats.map((stat, i) => (
-                  <div key={stat.label} className="relative">
+                  <div key={stat.label} className="relative flex flex-col items-center justify-center">
+                    {/* Divider for desktop/tablet */}
                     {i > 0 && (
-                      <div className="absolute left-0 top-1/2 -translate-y-1/2 w-px h-8"
+                      <div className="hidden md:block absolute left-0 top-1/2 -translate-y-1/2 w-px h-8"
                         style={{ background: 'rgba(0,245,255,0.2)' }} />
                     )}
-                    <div className="text-2xl md:text-3xl font-black gradient-text mb-1">{stat.number}</div>
-                    <div className="text-xs text-slate-400 font-mono">{stat.label}</div>
+                    {/* Divider for mobile (between columns) */}
+                    {(i % 2 !== 0) && (
+                      <div className="md:hidden absolute left-0 top-1/2 -translate-y-1/2 w-px h-8"
+                        style={{ background: 'rgba(0,245,255,0.2)' }} />
+                    )}
+
+                    <div className="text-[clamp(1.5rem,5vw,2.25rem)] font-black gradient-text mb-1 leading-none">
+                      {stat.number}
+                    </div>
+                    <div className="text-[clamp(0.65rem,2vw,0.75rem)] text-slate-400 font-mono tracking-wide px-2 whitespace-nowrap">
+                      {stat.label}
+                    </div>
                   </div>
                 ))}
               </div>

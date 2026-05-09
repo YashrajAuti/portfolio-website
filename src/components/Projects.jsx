@@ -227,7 +227,7 @@ function ProjectCard({ project, isGithubOnly = false }) {
           background: `linear-gradient(90deg, transparent, ${color}, transparent)`,
           boxShadow: `0 0 15px ${color}80`,
           opacity: isFlagship ? 1 : 0.4,
-        }} 
+        }}
       />
 
       {/* Hover glow background */}
@@ -235,7 +235,7 @@ function ProjectCard({ project, isGithubOnly = false }) {
         style={{ background: `radial-gradient(circle at center 0%, ${color}15, transparent 60%)` }} />
 
       <div className="p-7 flex flex-col flex-1 relative z-10">
-        
+
         {/* -- Header: Icons & Badges -- */}
         <div className="flex flex-wrap items-start justify-between gap-4 mb-5">
           <div className="flex items-center gap-3">
@@ -254,11 +254,11 @@ function ProjectCard({ project, isGithubOnly = false }) {
               </span>
             )}
           </div>
-          
+
           <div className="flex flex-wrap gap-2 justify-end">
             {badges.map(badge => (
               <span key={badge} className="text-[10px] font-mono tracking-wider font-bold px-2.5 py-1 rounded-full border bg-slate-900/80 backdrop-blur-md"
-                style={{ 
+                style={{
                   color: badge === 'LIVE' ? '#10b981' : badge === 'FEATURED PROJECT' ? '#f59e0b' : '#94a3b8',
                   borderColor: badge === 'LIVE' ? '#10b98140' : badge === 'FEATURED PROJECT' ? '#f59e0b40' : '#475569'
                 }}>
@@ -272,7 +272,7 @@ function ProjectCard({ project, isGithubOnly = false }) {
         <h3 className="text-xl md:text-2xl font-bold text-white leading-tight mb-4 group-hover:text-cyan-100 transition-colors duration-300">
           {title}
         </h3>
-        
+
         <p className="text-slate-300 text-sm md:text-base leading-relaxed mb-6">
           {shortDescription}
         </p>

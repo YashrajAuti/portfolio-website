@@ -41,7 +41,7 @@ export default function ParticleBackground() {
         this.currentColor = this.color.replace(/[\d.]+\)$/, `${currentAlpha})`);
 
         if (this.x < 0 || this.x > canvas.width ||
-            this.y < 0 || this.y > canvas.height) {
+          this.y < 0 || this.y > canvas.height) {
           this.reset();
           this.x = Math.random() * canvas.width;
           this.y = Math.random() * canvas.height;

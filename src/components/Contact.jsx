@@ -1,7 +1,15 @@
 import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
+import emailjs from '@emailjs/browser';
 import { FaGithub, FaLinkedinIn, FaEnvelope, FaMapMarkerAlt, FaPaperPlane } from 'react-icons/fa';
+
+// ─── EmailJS Config ───────────────────────────────────────────────────────────
+const EMAILJS_SERVICE_ID  = 'service_yokwt7i';
+const ADMIN_TEMPLATE_ID   = 'template_wwb9qvu';   // notification to autiyashraj8@gmail.com
+const REPLY_TEMPLATE_ID   = 'template_qsuwk2u';   // auto-reply to visitor
+const EMAILJS_PUBLIC_KEY  = 'cehLwxLshrQUStgbV';
+// ─────────────────────────────────────────────────────────────────────────────
 
 const contactInfo = [
   {
@@ -40,10 +48,19 @@ const contactInfo = [
 
 export default function Contact() {
   const ref = useRef(null);
+  const formRef = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
-  const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
-  const [status, setStatus] = useState(null); // null | 'sending' | 'sent' | 'error'
+  const [formData, setFormData] = useState({
+    from_name: '',
+    from_email: '',
+    subject: '',
+    message: '',
+  });
+
+  // status: null | 'sending' | 'sent' | 'error'
+  const [status, setStatus] = useState(null);
+  const [errorMsg, setErrorMsg] = useState('');
 
   const handleChange = (e) => {
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
@@ -52,18 +69,59 @@ export default function Contact() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus('sending');
-    // Simulate send (replace with real API call)
-    setTimeout(() => {
+    setErrorMsg('');
+
+    // Build template params — field names MUST match your EmailJS template variables
+    const adminParams = {
+      from_name:  formData.from_name,
+      from_email: formData.from_email,
+      subject:    `[Portfolio Contact] ${formData.subject}`,
+      message:    formData.message,
+    };
+
+    const replyParams = {
+      from_name:  formData.from_name,
+      from_email: formData.from_email,   // EmailJS sends auto-reply TO this address
+      subject:    formData.subject,
+      message:    formData.message,
+    };
+
+    try {
+      // STEP 1 — Send admin notification
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        ADMIN_TEMPLATE_ID,
+        adminParams,
+        EMAILJS_PUBLIC_KEY
+      );
+
+      // STEP 2 — Send auto-reply to visitor
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        REPLY_TEMPLATE_ID,
+        replyParams,
+        EMAILJS_PUBLIC_KEY
+      );
+
       setStatus('sent');
-      setFormData({ name: '', email: '', subject: '', message: '' });
-      setTimeout(() => setStatus(null), 4000);
-    }, 1500);
+      setFormData({ from_name: '', from_email: '', subject: '', message: '' });
+      setTimeout(() => setStatus(null), 5000);
+    } catch (err) {
+      console.error('EmailJS error:', err);
+      setErrorMsg('Something went wrong. Please try again or email me directly.');
+      setStatus('error');
+      setTimeout(() => setStatus(null), 6000);
+    }
   };
+
+  const isSending = status === 'sending';
 
   return (
     <section id="contact" className="py-24 relative">
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-1/2 opacity-5 pointer-events-none blur-3xl"
-        style={{ background: 'radial-gradient(ellipse, #00f5ff, transparent)' }} />
+      <div
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-1/2 opacity-5 pointer-events-none blur-3xl"
+        style={{ background: 'radial-gradient(ellipse, #00f5ff, transparent)' }}
+      />
 
       <div className="max-w-7xl mx-auto px-6" ref={ref}>
         {/* Header */}
@@ -91,12 +149,14 @@ export default function Contact() {
           >
             {/* Intro card */}
             <div className="glass-card p-6 relative overflow-hidden animated-border">
-              <div className="absolute top-0 right-0 w-24 h-24 opacity-10 pointer-events-none"
-                style={{ background: 'radial-gradient(circle at top right, #00f5ff, transparent)' }} />
+              <div
+                className="absolute top-0 right-0 w-24 h-24 opacity-10 pointer-events-none"
+                style={{ background: 'radial-gradient(circle at top right, #00f5ff, transparent)' }}
+              />
               <h3 className="text-white font-bold text-xl mb-3">Let's Connect</h3>
               <p className="text-slate-400 text-sm leading-relaxed">
-                I'm actively looking for internship and placement opportunities. 
-                Whether you have a project, a question, or just want to say hi — 
+                I'm actively looking for internship and placement opportunities.&nbsp;
+                Whether you have a project, a question, or just want to say hi —&nbsp;
                 my inbox is always open!
               </p>
             </div>
@@ -110,9 +170,14 @@ export default function Contact() {
                 transition={{ duration: 0.5, delay: 0.3 + i * 0.1 }}
               >
                 {item.href ? (
-                  <a id={item.id} href={item.href} target="_blank" rel="noopener noreferrer"
+                  <a
+                    id={item.id}
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="glass-card p-4 flex items-center gap-4 skill-card block"
-                    style={{ borderColor: `${item.color}20` }}>
+                    style={{ borderColor: `${item.color}20` }}
+                  >
                     <ContactIcon icon={item.icon} color={item.color} />
                     <div>
                       <p className="text-xs text-slate-500 font-mono mb-0.5">{item.label}</p>
@@ -120,8 +185,11 @@ export default function Contact() {
                     </div>
                   </a>
                 ) : (
-                  <div id={item.id} className="glass-card p-4 flex items-center gap-4 cursor-default"
-                    style={{ borderColor: `${item.color}20` }}>
+                  <div
+                    id={item.id}
+                    className="glass-card p-4 flex items-center gap-4 cursor-default"
+                    style={{ borderColor: `${item.color}20` }}
+                  >
                     <ContactIcon icon={item.icon} color={item.color} />
                     <div>
                       <p className="text-xs text-slate-500 font-mono mb-0.5">{item.label}</p>
@@ -141,32 +209,42 @@ export default function Contact() {
             className="lg:col-span-3"
           >
             <div className="glass-card p-8 animated-border">
-              <form id="contact-form" onSubmit={handleSubmit} className="space-y-5">
+              <form id="contact-form" ref={formRef} onSubmit={handleSubmit} className="space-y-5">
+
                 <div className="grid sm:grid-cols-2 gap-5">
+                  {/* Name */}
                   <div>
-                    <label htmlFor="name" className="block text-xs font-mono text-slate-400 mb-2 tracking-wider uppercase">
+                    <label
+                      htmlFor="from_name"
+                      className="block text-xs font-mono text-slate-400 mb-2 tracking-wider uppercase"
+                    >
                       Your Name
                     </label>
                     <input
                       type="text"
-                      id="name"
-                      name="name"
-                      value={formData.name}
+                      id="from_name"
+                      name="from_name"
+                      value={formData.from_name}
                       onChange={handleChange}
                       required
                       placeholder="John Doe"
                       className="form-input"
                     />
                   </div>
+
+                  {/* Email */}
                   <div>
-                    <label htmlFor="email" className="block text-xs font-mono text-slate-400 mb-2 tracking-wider uppercase">
+                    <label
+                      htmlFor="from_email"
+                      className="block text-xs font-mono text-slate-400 mb-2 tracking-wider uppercase"
+                    >
                       Email Address
                     </label>
                     <input
                       type="email"
-                      id="email"
-                      name="email"
-                      value={formData.email}
+                      id="from_email"
+                      name="from_email"
+                      value={formData.from_email}
                       onChange={handleChange}
                       required
                       placeholder="john@example.com"
@@ -175,8 +253,12 @@ export default function Contact() {
                   </div>
                 </div>
 
+                {/* Subject */}
                 <div>
-                  <label htmlFor="subject" className="block text-xs font-mono text-slate-400 mb-2 tracking-wider uppercase">
+                  <label
+                    htmlFor="subject"
+                    className="block text-xs font-mono text-slate-400 mb-2 tracking-wider uppercase"
+                  >
                     Subject
                   </label>
                   <input
@@ -191,8 +273,12 @@ export default function Contact() {
                   />
                 </div>
 
+                {/* Message */}
                 <div>
-                  <label htmlFor="message" className="block text-xs font-mono text-slate-400 mb-2 tracking-wider uppercase">
+                  <label
+                    htmlFor="message"
+                    className="block text-xs font-mono text-slate-400 mb-2 tracking-wider uppercase"
+                  >
                     Message
                   </label>
                   <textarea
@@ -211,37 +297,71 @@ export default function Contact() {
                 <motion.button
                   id="contact-submit"
                   type="submit"
-                  disabled={status === 'sending'}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="w-full btn-primary flex items-center justify-center gap-3 py-4 disabled:opacity-70"
+                  disabled={isSending}
+                  whileHover={!isSending ? { scale: 1.02 } : {}}
+                  whileTap={!isSending ? { scale: 0.98 } : {}}
+                  className="w-full btn-primary flex items-center justify-center gap-3 py-4 disabled:opacity-80 transition-all duration-300"
+                  style={
+                    isSending
+                      ? { boxShadow: '0 0 36px #00f5ffaa, 0 0 10px #00f5ff55' }
+                      : {}
+                  }
                 >
-                  {status === 'sending' ? (
+                  {isSending ? (
                     <>
                       <motion.div
                         animate={{ rotate: 360 }}
-                        transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-                        className="w-4 h-4 rounded-full border-2 border-navy-950 border-t-transparent"
-                        style={{ borderColor: '#020817', borderTopColor: 'transparent' }}
+                        transition={{ duration: 0.85, repeat: Infinity, ease: 'linear' }}
+                        className="w-4 h-4 rounded-full"
+                        style={{
+                          border: '2px solid transparent',
+                          borderTopColor: '#020817',
+                          borderRightColor: '#020817',
+                          background: 'transparent',
+                        }}
                       />
-                      <span>Sending...</span>
+                      <span className="tracking-widest font-mono text-xs">Sending...</span>
                     </>
                   ) : status === 'sent' ? (
-                    <><span>✅</span><span>Message Sent!</span></>
+                    <>
+                      <span>✅</span>
+                      <span className="tracking-widest font-mono text-xs">Message Sent ✔</span>
+                    </>
+                  ) : status === 'error' ? (
+                    <>
+                      <span>⚠️</span>
+                      <span className="tracking-widest font-mono text-xs">Failed to Send</span>
+                    </>
                   ) : (
-                    <><FaPaperPlane size={14} className="relative z-10" /><span>Send Message</span></>
+                    <>
+                      <FaPaperPlane size={14} className="relative z-10" />
+                      <span className="tracking-widest font-mono text-xs">SEND MESSAGE</span>
+                    </>
                   )}
                 </motion.button>
 
+                {/* Success feedback */}
                 {status === 'sent' && (
                   <motion.p
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="text-center text-sm text-green-400 font-mono"
+                    className="text-center text-sm text-cyan-400 font-mono"
                   >
-                    Thanks! I'll get back to you within 24 hours. 🚀
+                    🚀 Message delivered! An auto-reply has been sent to your inbox.
                   </motion.p>
                 )}
+
+                {/* Error feedback */}
+                {status === 'error' && (
+                  <motion.p
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="text-center text-sm text-rose-400 font-mono"
+                  >
+                    ⚠️ {errorMsg}
+                  </motion.p>
+                )}
+
               </form>
             </div>
           </motion.div>
@@ -253,8 +373,14 @@ export default function Contact() {
 
 function ContactIcon({ icon: Icon, color }) {
   return (
-    <div className="w-10 h-10 rounded-xl flex-shrink-0 flex items-center justify-center"
-      style={{ background: `${color}12`, border: `1px solid ${color}30`, boxShadow: `0 0 15px ${color}20` }}>
+    <div
+      className="w-10 h-10 rounded-xl flex-shrink-0 flex items-center justify-center"
+      style={{
+        background: `${color}12`,
+        border: `1px solid ${color}30`,
+        boxShadow: `0 0 15px ${color}20`,
+      }}
+    >
       <Icon style={{ color }} size={16} />
     </div>
   );
