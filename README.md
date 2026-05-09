@@ -1,16 +1,62 @@
-# React + Vite
+<div align="center">
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:232526,100:414345&height=220&section=header&text=Portfolio%20Website&fontSize=55&fontColor=ffffff&animation=fadeIn" />
 
-Currently, two official plugins are available:
+<br/>
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+<img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=18&pause=1000&color=00C6FF&center=true&vCenter=true&width=650&lines=Personal+Developer+Portfolio;Showcasing+Projects+%2C+Skills+%2C+Experience;Built+for+Professional+Presence+Online" />
 
-## React Compiler
+</div>
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## 🌐 Live Demo
+👉 https://yashrajauti.vercel.app/
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 💻 GitHub Repository
+👉 https://github.com/YashrajAuti/portfolio-website
+
+---
+
+## 📌 About Project
+A fully responsive personal portfolio website designed to showcase my engineering journey, technical skills, projects, and achievements in a structured and professional way.
+
+---
+
+## ⚙️ Tech Stack
+- HTML5  
+- CSS3  
+- JavaScript  
+- Responsive Web Design  
+
+---
+
+## 🚀 Features
+- 🎯 Clean modern UI design  
+- 📱 Fully responsive layout (mobile + desktop)  
+- 💼 Projects showcase section  
+- 🧠 Skills and technical stack display  
+- 🏆 Achievements & certifications section  
+- 📬 Contact section integration  
+- ⚡ Smooth navigation experience  
+
+---
+
+## 🎯 Purpose
+This portfolio is designed to reflect my:
+- Problem-solving mindset  
+- Engineering fundamentals  
+- Real-world project experience  
+- Consistency in learning and building  
+
+---
+
+<div align="center">
+
+<img src="https://media.giphy.com/media/26tn33aiTi1jkl6H6/giphy.gif" width="200"/>
+
+<br/>
+
+<b>Built to represent my engineering identity and development journey</b>
+
+</div>
