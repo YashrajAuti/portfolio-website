@@ -1,0 +1,152 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450">
+  <defs>
+    <linearGradient id="ibvapBgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0c0e14" />
+      <stop offset="50%" stop-color="#141722" />
+      <stop offset="100%" stop-color="#090b0f" />
+    </linearGradient>
+    <linearGradient id="alertGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ef4444" stop-opacity="0.2" />
+      <stop offset="100%" stop-color="#f59e0b" stop-opacity="0.2" />
+    </linearGradient>
+    <linearGradient id="hudGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e2230" />
+      <stop offset="100%" stop-color="#11131c" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="450" fill="url(#ibvapBgGrad)" />
+
+  <!-- Radar circle overlays -->
+  <g opacity="0.08" stroke="#f59e0b" stroke-width="1">
+    <circle cx="300" cy="240" r="180" fill="none" />
+    <circle cx="300" cy="240" r="120" fill="none" />
+    <circle cx="300" cy="240" r="60" fill="none" />
+    <line x1="300" y1="60" x2="300" y2="420" stroke-dasharray="4,4" />
+    <line x1="120" y1="240" x2="480" y2="240" stroke-dasharray="4,4" />
+  </g>
+
+  <!-- Window Chrome -->
+  <rect x="25" y="20" width="750" height="410" rx="12" fill="#090b10" stroke="#27272a" stroke-width="1.5" />
+  
+  <!-- Window Titlebar -->
+  <path d="M 25 32 Q 25 20 37 20 L 763 20 Q 775 20 775 32 L 775 58 L 25 58 Z" fill="#12151f" />
+  <circle cx="48" cy="39" r="6" fill="#ef4444" />
+  <circle cx="68" cy="39" r="6" fill="#eab308" />
+  <circle cx="88" cy="39" r="6" fill="#22c55e" />
+
+  <!-- URL Bar -->
+  <rect x="130" y="28" width="460" height="22" rx="6" fill="#1e2230" />
+  <text x="145" y="43" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="11">https://ibvap-sigma.vercel.app</text>
+  <rect x="620" y="28" width="135" height="22" rx="6" fill="#ef4444" fill-opacity="0.15" stroke="#ef4444" stroke-opacity="0.4" stroke-width="1" />
+  <text x="635" y="43" fill="#f87171" font-family="system-ui, sans-serif" font-size="9.5" font-weight="bold">AI SURVEILLANCE DEMO</text>
+
+  <!-- Main Viewport (Video Stream Simulation) -->
+  <g transform="translate(45, 72)">
+    <!-- Video Feed Container -->
+    <rect x="0" y="0" width="480" height="280" rx="8" fill="#07090e" stroke="#f59e0b" stroke-opacity="0.4" stroke-width="1.2" />
+
+    <!-- Video Feed Header / Camera HUD -->
+    <rect x="0" y="0" width="480" height="28" rx="8" fill="#111420" />
+    <circle cx="16" cy="14" r="4" fill="#22c55e" />
+    <text x="26" y="18" fill="#4ade80" font-family="monospace" font-size="10" font-weight="bold">LIVE CAM-01 [RTSP STREAM]</text>
+    <text x="210" y="18" fill="#94a3b8" font-family="monospace" font-size="9.5">FPS: 30.0 • RES: 1920x1080 • MPS ACCELERATED</text>
+    <rect x="420" y="5" width="50" height="18" rx="3" fill="#ef4444" />
+    <text x="445" y="18" fill="#ffffff" font-family="monospace" font-size="9" font-weight="bold" text-anchor="middle">REC ●</text>
+
+    <!-- Simulated Scene / Terrain -->
+    <line x1="0" y1="210" x2="480" y2="210" stroke="#1f2937" stroke-width="2" />
+    
+    <!-- Virtual Fence / Restricted Line Crossing (Red Dashed) -->
+    <line x1="30" y1="180" x2="450" y2="180" stroke="#ef4444" stroke-width="2" stroke-dasharray="6,4" />
+    <rect x="160" y="170" width="160" height="18" rx="3" fill="#ef4444" fill-opacity="0.25" stroke="#ef4444" stroke-width="1" />
+    <text x="240" y="183" fill="#fca5a5" font-family="monospace" font-size="8.5" font-weight="bold" text-anchor="middle">RESTRICTED BORDER BOUNDARY</text>
+
+    <!-- Bounding Box 1: Person Track #104 -->
+    <g transform="translate(70, 95)">
+      <rect x="0" y="0" width="65" height="95" fill="none" stroke="#22c55e" stroke-width="1.5" />
+      <rect x="-1" y="-18" width="75" height="18" fill="#22c55e" />
+      <text x="4" y="-5" fill="#04131a" font-family="monospace" font-size="8.5" font-weight="bold">ID:104 Person 96%</text>
+      <!-- Trajectory Points -->
+      <circle cx="32" cy="95" r="2.5" fill="#22c55e" />
+      <line x1="32" y1="95" x2="45" y2="115" stroke="#22c55e" stroke-width="1" stroke-dasharray="2,2" />
+      <line x1="45" y1="115" x2="55" y2="135" stroke="#22c55e" stroke-width="1" stroke-dasharray="2,2" />
+    </g>
+
+    <!-- Bounding Box 2: Vehicle Breach Track #88 -->
+    <g transform="translate(260, 110)">
+      <rect x="0" y="0" width="140" height="80" fill="#ef4444" fill-opacity="0.1" stroke="#ef4444" stroke-width="2" />
+      <rect x="-1" y="-20" width="142" height="20" fill="#ef4444" />
+      <text x="5" y="-6" fill="#ffffff" font-family="monospace" font-size="9" font-weight="bold">ID:88 Truck 94% [ALERT]</text>
+      <!-- ANPR Label overlay -->
+      <rect x="25" y="85" width="90" height="22" rx="3" fill="#18181b" stroke="#f59e0b" stroke-width="1" />
+      <text x="70" y="100" fill="#fbbf24" font-family="monospace" font-size="9.5" font-weight="bold" text-anchor="middle">MH 12 AB 4590</text>
+    </g>
+
+    <!-- Overlay Coordinates HUD -->
+    <text x="12" y="270" fill="#64748b" font-family="monospace" font-size="8.5">YOLOv8s Detector • ByteTrack 30-Frame Memory Buffer • OpenCV Core</text>
+  </g>
+
+  <!-- Right Sidebar: Live Analytics & Alerts HUD -->
+  <g transform="translate(540, 72)">
+    <rect x="0" y="0" width="215" height="280" rx="8" fill="url(#hudGrad)" stroke="#3f3f46" stroke-width="1" />
+    
+    <!-- Sidebar Header -->
+    <rect x="0" y="0" width="215" height="32" rx="8" fill="#18181b" />
+    <text x="12" y="20" fill="#fbbf24" font-family="system-ui, sans-serif" font-size="11" font-weight="bold">⚡ EVENT ANALYTICS</text>
+    <circle cx="195" cy="16" r="4" fill="#ef4444" />
+
+    <!-- Metric Badges -->
+    <g transform="translate(10, 42)">
+      <rect x="0" y="0" width="92" height="42" rx="6" fill="#18181b" stroke="#27272a" />
+      <text x="8" y="16" fill="#a1a1aa" font-family="system-ui, sans-serif" font-size="8.5">ACTIVE TRACKS</text>
+      <text x="8" y="34" fill="#22c55e" font-family="monospace" font-size="15" font-weight="bold">14</text>
+
+      <rect x="102" y="0" width="92" height="42" rx="6" fill="#18181b" stroke="#27272a" />
+      <text x="8" y="16" fill="#a1a1aa" font-family="system-ui, sans-serif" font-size="8.5">EVENTS TODAY</text>
+      <text x="8" y="34" fill="#ef4444" font-family="monospace" font-size="15" font-weight="bold">03</text>
+    </g>
+
+    <!-- Event List -->
+    <g transform="translate(10, 95)">
+      <text x="2" y="10" fill="#71717a" font-family="monospace" font-size="8.5">// REAL-TIME EVENT STREAM</text>
+
+      <!-- Event 1 -->
+      <g transform="translate(0, 18)">
+        <rect x="0" y="0" width="195" height="45" rx="5" fill="#ef4444" fill-opacity="0.12" stroke="#ef4444" stroke-opacity="0.5" stroke-width="1" />
+        <circle cx="10" cy="12" r="3" fill="#ef4444" />
+        <text x="18" y="15" fill="#f87171" font-family="system-ui, sans-serif" font-size="9" font-weight="bold">Virtual Line Crossing</text>
+        <text x="155" y="15" fill="#71717a" font-family="monospace" font-size="8">14:02:18</text>
+        <text x="10" y="32" fill="#cbd5e1" font-family="system-ui, sans-serif" font-size="8.5">Boundary breached by Track #88</text>
+      </g>
+
+      <!-- Event 2 -->
+      <g transform="translate(0, 70)">
+        <rect x="0" y="0" width="195" height="45" rx="5" fill="#f59e0b" fill-opacity="0.12" stroke="#f59e0b" stroke-opacity="0.5" stroke-width="1" />
+        <circle cx="10" cy="12" r="3" fill="#f59e0b" />
+        <text x="18" y="15" fill="#fbbf24" font-family="system-ui, sans-serif" font-size="9" font-weight="bold">Restricted Zone Entry</text>
+        <text x="155" y="15" fill="#71717a" font-family="monospace" font-size="8">14:01:45</text>
+        <text x="10" y="32" fill="#cbd5e1" font-family="system-ui, sans-serif" font-size="8.5">Perimeter polygon trigger (A2)</text>
+      </g>
+
+      <!-- Event 3 -->
+      <g transform="translate(0, 122)">
+        <rect x="0" y="0" width="195" height="45" rx="5" fill="#06b6d4" fill-opacity="0.12" stroke="#06b6d4" stroke-opacity="0.5" stroke-width="1" />
+        <circle cx="10" cy="12" r="3" fill="#06b6d4" />
+        <text x="18" y="15" fill="#38bdf8" font-family="system-ui, sans-serif" font-size="9" font-weight="bold">ANPR Plate Extracted</text>
+        <text x="155" y="15" fill="#71717a" font-family="monospace" font-size="8">13:58:10</text>
+        <text x="10" y="32" fill="#cbd5e1" font-family="monospace" font-size="8.5">OCR: MH 12 AB 4590 (EasyOCR)</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- Bottom Tech Footer -->
+  <g transform="translate(45, 365)">
+    <rect x="0" y="0" width="710" height="50" rx="8" fill="#111420" stroke="#27272a" stroke-width="1" />
+    <circle cx="20" cy="25" r="5" fill="#f59e0b" />
+    <text x="35" y="29" fill="#e2e8f0" font-family="system-ui, sans-serif" font-size="11" font-weight="600">Computer Vision Stack:</text>
+    <text x="180" y="29" fill="#fbbf24" font-family="system-ui, sans-serif" font-size="11">Python • YOLOv8 • ByteTrack • OpenCV • FastAPI • WebSockets</text>
+    <text x="590" y="29" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="11">Architecture: Prototype</text>
+  </g>
+</svg>

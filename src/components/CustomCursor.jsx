@@ -22,7 +22,7 @@ export default function CustomCursor() {
 
     const onMouseOver = (e) => {
       const el = e.target;
-      if (el.matches('a, button, [role="button"], input, textarea, select, label, .cursor-pointer')) {
+      if (el?.closest && el.closest('a, button, [role="button"], [role="link"], input, textarea, select, label, .cursor-pointer')) {
         setIsHovering(true);
       }
     };

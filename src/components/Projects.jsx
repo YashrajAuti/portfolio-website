@@ -1,17 +1,104 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { FaGithub, FaExternalLinkAlt, FaLock, FaCalendarAlt, FaStethoscope, FaUniversity, FaRegCheckCircle } from 'react-icons/fa';
+import {
+  FaGithub,
+  FaExternalLinkAlt,
+  FaLock,
+  FaCalendarAlt,
+  FaStethoscope,
+  FaUniversity,
+  FaRegCheckCircle,
+  FaCalendarCheck,
+  FaLandmark,
+  FaShieldAlt,
+} from 'react-icons/fa';
 import { HiSparkles, HiCode } from 'react-icons/hi';
 import { BiGitBranch } from 'react-icons/bi';
 
 /* ─── Data: Featured Live Projects ─── */
 const featuredProjects = [
   {
+    id: 'project-college-timetable',
+    title: 'College Timetable Management System',
+    badges: ['FEATURED PROJECT', 'LIVE'],
+    specialTag: 'OR-Tools CP-SAT',
+    shortDescription:
+      'A web-based college timetable management system designed to simplify academic scheduling. It supports automated timetable generation and complex scheduling constraints involving faculty workloads, classrooms, laboratories, and academic sessions.',
+    features: [
+      'Automated timetable generation',
+      'Google OR-Tools CP-SAT constraint optimization',
+      'Faculty and classroom allocation',
+      'Laboratory and coordinated batch scheduling',
+      'Constraint-based clash prevention',
+      'Zero-trust schedule validation engine',
+      'Division-wide theory slot locking',
+      'Prisma transactional persistence with rollback',
+    ],
+    techStack: ['Next.js', 'Python', 'Google OR-Tools', 'CP-SAT Solver', 'TypeScript', 'Prisma'],
+    github: 'https://github.com/YashrajAuti/college-timetable-system',
+    demo: 'https://mmit-timetable.vercel.app/login',
+    image: '/projects/college-timetable.svg',
+    icon: FaCalendarCheck,
+    color: '#00f5ff', // Neon cyan
+    isFlagship: true,
+  },
+  {
+    id: 'project-connectgov',
+    title: 'ConnectGov – Government Services Platform',
+    badges: ['FEATURED PROJECT', 'LIVE'],
+    specialTag: 'Student Initiative',
+    shortDescription:
+      'A digital platform focused on improving access to government education, employment, and welfare services in Maharashtra. It aims to make relevant public-service information easier to discover through a centralized web interface.',
+    features: [
+      'Centralized education, employment & welfare discovery',
+      'Citizen consent management workflow',
+      'Organized presentation of public-service information',
+      'Lightweight cross-department data interoperability',
+      'Unified application lifecycle tracking',
+      'Responsive multilingual interface (English, Marathi, Hindi)',
+      'Department service registry & health status',
+      'Student-developed digital governance prototype',
+    ],
+    techStack: ['React', 'Vite', 'Node.js', 'Express.js', 'Tailwind CSS', 'REST API'],
+    github: 'https://github.com/YashrajAuti/ConnectGov',
+    demo: 'https://connectgovt.vercel.app/',
+    image: '/projects/connectgov.svg',
+    icon: FaLandmark,
+    color: '#10b981', // Emerald green
+    isFlagship: false,
+  },
+  {
+    id: 'project-ibvap',
+    title: 'IBVAP – Intelligent Border Video Analytics Platform',
+    badges: ['FEATURED PROJECT', 'LIVE'],
+    specialTag: 'AI Computer Vision',
+    shortDescription:
+      'An AI-powered video analytics and surveillance project designed to analyze video streams, track objects, and identify potentially significant events for security monitoring. It explores computer vision techniques for automated surveillance and event detection.',
+    features: [
+      'Object detection using YOLOv8',
+      'Multi-object tracking using ByteTrack with persistent IDs',
+      'Video stream processing using OpenCV',
+      'Virtual line crossing & directional event detection',
+      'Restricted perimeter polygon entry alerts',
+      'Experimental ANPR with EasyOCR license plate recognition',
+      'Real-time WebSocket telemetry & event broadcasting',
+      'Modern glassmorphism surveillance demonstration dashboard',
+    ],
+    techStack: ['Python', 'YOLOv8', 'ByteTrack', 'OpenCV', 'FastAPI', 'React', 'Computer Vision'],
+    github: 'https://github.com/YashrajAuti/IBVAP',
+    demo: 'https://ibvap-sigma.vercel.app/',
+    image: '/projects/ibvap.svg',
+    icon: FaShieldAlt,
+    color: '#f59e0b', // Amber / Gold
+    isFlagship: false,
+  },
+  {
     id: 'project-paper-paradox',
     title: 'Paper Paradox – Secure Digital Academic Verification System',
     badges: ['FEATURED PROJECT', 'LIVE'],
     specialTag: 'IEEE Presentation Project',
-    shortDescription: 'A cloud-based academic workflow platform designed to replace paper-based verification systems using secure digital validation methods. Solves the "Paper Paradox" problem by integrating cryptographic hashing, timestamps, and cloud storage to create a sustainable and secure paperless verification system.',
+    shortDescription:
+      'A cloud-based academic workflow platform designed to replace paper-based verification systems using secure digital validation methods. Solves the "Paper Paradox" problem by integrating cryptographic hashing, timestamps, and cloud storage to create a sustainable and secure paperless verification system.',
     features: [
       'Secure digital document verification',
       'Cryptographic hash generation',
@@ -20,21 +107,23 @@ const featuredProjects = [
       'Role-based authentication',
       'Real-time status tracking',
       'Sustainable paperless workflow',
-      'Green IT implementation'
+      'Green IT implementation',
     ],
     techStack: ['HTML', 'CSS', 'JavaScript', 'Python', 'Flask', 'Cloud Computing', 'Cryptographic Hashing'],
     github: 'https://github.com/YashrajAuti/paper-paradox',
     demo: 'https://paper-paradox.onrender.com/',
+    image: '/projects/paper-paradox.svg',
     icon: FaLock,
-    color: '#00f5ff', // Neon cyan
-    isFlagship: true,
+    color: '#38bdf8', // Sky Blue
+    isFlagship: false,
   },
   {
     id: 'project-timetable',
     title: 'Time Table Management System',
     badges: ['LIVE'],
     specialTag: null,
-    shortDescription: 'A DBMS-oriented web application that automates timetable generation and scheduling for educational institutions using optimized rule-based logic and relational database management concepts.',
+    shortDescription:
+      'A DBMS-oriented web application that automates timetable generation and scheduling for educational institutions using optimized rule-based logic and relational database management concepts.',
     features: [
       'Automated timetable generation',
       'Faculty conflict prevention',
@@ -43,15 +132,16 @@ const featuredProjects = [
       'Relational database design',
       'CRUD functionality',
       'Normalized database schema',
-      'User-friendly scheduling workflow'
+      'User-friendly scheduling workflow',
     ],
     techStack: ['HTML', 'CSS', 'JavaScript', 'Python', 'Flask', 'MySQL', 'SQLite', 'DBMS'],
     github: 'https://github.com/YashrajAuti/Time-Table-Management-System',
     demo: 'https://timetable-generator-p1za.onrender.com/',
+    image: '/projects/timetable-dbms.svg',
     icon: FaCalendarAlt,
     color: '#a855f7', // Purple
     isFlagship: false,
-  }
+  },
 ];
 
 /* ─── Data: GitHub Projects ─── */
@@ -60,7 +150,8 @@ const githubProjects = [
     id: 'project-lifeline',
     title: 'LifeLine Hospital Management App',
     badges: ['GITHUB ONLY'],
-    shortDescription: 'A Java console-based hospital management application that simulates patient handling, doctor assignment, room management, billing, and payment processing through a menu-driven interface.',
+    shortDescription:
+      'A Java console-based hospital management application that simulates patient handling, doctor assignment, room management, billing, and payment processing through a menu-driven interface.',
     features: [
       'Doctor and specialization selection',
       'Patient registration',
@@ -68,10 +159,11 @@ const githubProjects = [
       'Room management system',
       'Treatment billing',
       'Payment and checkout',
-      'Patient reports generation'
+      'Patient reports generation',
     ],
     techStack: ['Java', 'OOP', 'Console Application'],
     github: 'https://github.com/YashrajAuti/LifelineHospitalApp',
+    image: '/projects/lifeline-hospital.svg',
     icon: FaStethoscope,
     color: '#f472b6', // Pink
   },
@@ -79,20 +171,22 @@ const githubProjects = [
     id: 'project-bank',
     title: 'Bank Management System',
     badges: ['GITHUB ONLY'],
-    shortDescription: 'A Java-based console banking application developed using Object-Oriented Programming concepts to simulate core banking functionalities like account creation, deposits, withdrawals, and balance management.',
+    shortDescription:
+      'A Java-based console banking application developed using Object-Oriented Programming concepts to simulate core banking functionalities like account creation, deposits, withdrawals, and balance management.',
     features: [
       'Account creation',
       'Deposit and withdrawal system',
       'Balance inquiry',
       'Record management',
       'OOP-based architecture',
-      'Menu-driven interface'
+      'Menu-driven interface',
     ],
     techStack: ['Java', 'OOP', 'Arrays', 'Scanner Class'],
     github: 'https://github.com/YashrajAuti/Java-Bank-Management-System',
+    image: '/projects/bank-management.svg',
     icon: FaUniversity,
     color: '#4facfe', // Electric Blue
-  }
+  },
 ];
 
 /* ─── Animations ─── */
@@ -114,10 +208,14 @@ export default function Projects() {
   return (
     <section id="projects" className="py-24 relative overflow-hidden">
       {/* Background glowing blobs */}
-      <div className="absolute top-1/4 left-0 w-96 h-96 rounded-full opacity-5 blur-[100px] pointer-events-none"
-        style={{ background: '#00f5ff' }} />
-      <div className="absolute bottom-1/4 right-0 w-80 h-80 rounded-full opacity-5 blur-[100px] pointer-events-none"
-        style={{ background: '#a855f7' }} />
+      <div
+        className="absolute top-1/4 left-0 w-96 h-96 rounded-full opacity-5 blur-[100px] pointer-events-none"
+        style={{ background: '#00f5ff' }}
+      />
+      <div
+        className="absolute bottom-1/4 right-0 w-80 h-80 rounded-full opacity-5 blur-[100px] pointer-events-none"
+        style={{ background: '#a855f7' }}
+      />
 
       <div className="max-w-7xl mx-auto px-6" ref={ref}>
         {/* ── Section Header ── */}
@@ -127,8 +225,10 @@ export default function Projects() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center gap-2 mb-4 px-4 py-1.5 rounded-full text-xs font-mono text-cyan-400"
-            style={{ background: 'rgba(0,245,255,0.06)', border: '1px solid rgba(0,245,255,0.18)' }}>
+          <div
+            className="inline-flex items-center gap-2 mb-4 px-4 py-1.5 rounded-full text-xs font-mono text-cyan-400"
+            style={{ background: 'rgba(0,245,255,0.06)', border: '1px solid rgba(0,245,255,0.18)' }}
+          >
             <HiCode className="text-cyan-400" size={16} />
             <span>Developer Portfolio</span>
           </div>
@@ -139,7 +239,7 @@ export default function Projects() {
           <h2 className="section-title">Projects Showcase</h2>
           <div className="glow-line" />
           <p className="section-subtitle">
-            A selection of my technical work, ranging from secure cloud architectures and DBMS-driven web applications to core Java OOP implementations.
+            A selection of my technical work, ranging from AI computer vision and optimization solvers to government service portals and core Java OOP systems.
           </p>
         </motion.div>
 
@@ -155,7 +255,10 @@ export default function Projects() {
               <HiSparkles className="text-cyan-400" size={20} />
             </div>
             <h3 className="text-2xl font-bold text-white tracking-wide">Featured Live Projects</h3>
-            <div className="flex-1 h-px ml-4" style={{ background: 'linear-gradient(90deg, rgba(0,245,255,0.3), transparent)' }} />
+            <div
+              className="flex-1 h-px ml-4"
+              style={{ background: 'linear-gradient(90deg, rgba(0,245,255,0.3), transparent)' }}
+            />
           </motion.div>
 
           <motion.div
@@ -184,7 +287,10 @@ export default function Projects() {
               <BiGitBranch className="text-purple-400" size={20} />
             </div>
             <h3 className="text-2xl font-bold text-white tracking-wide">GitHub Projects</h3>
-            <div className="flex-1 h-px ml-4" style={{ background: 'linear-gradient(90deg, rgba(168,85,247,0.3), transparent)' }} />
+            <div
+              className="flex-1 h-px ml-4"
+              style={{ background: 'linear-gradient(90deg, rgba(168,85,247,0.3), transparent)' }}
+            />
           </motion.div>
 
           <motion.div
@@ -200,7 +306,6 @@ export default function Projects() {
             ))}
           </motion.div>
         </div>
-
       </div>
     </section>
   );
@@ -210,19 +315,69 @@ export default function Projects() {
    Project Card Component (Reusable)
 ════════════════════════════════════════════ */
 function ProjectCard({ project, isGithubOnly = false }) {
-  const { title, badges, specialTag, shortDescription, features, techStack, github, demo, icon: Icon, color, isFlagship } = project;
+  const {
+    title,
+    badges,
+    specialTag,
+    shortDescription,
+    features,
+    techStack,
+    github,
+    demo,
+    image,
+    icon: Icon,
+    color,
+    isFlagship,
+  } = project;
+
+  const [imgError, setImgError] = useState(false);
+
+  // Primary URL for clicking the card (Live Demo if present, fallback to GitHub)
+  const targetUrl = demo || github;
+
+  const handleCardClick = (e) => {
+    // If the click originated from a link/button, let that element handle it
+    if (e.target.closest('a') || e.target.closest('button')) {
+      return;
+    }
+    if (targetUrl) {
+      window.open(targetUrl, '_blank', 'noopener,noreferrer');
+    }
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      if (!e.target.closest('a') && !e.target.closest('button')) {
+        e.preventDefault();
+        if (targetUrl) {
+          window.open(targetUrl, '_blank', 'noopener,noreferrer');
+        }
+      }
+    }
+  };
 
   return (
     <motion.div
+      onClick={handleCardClick}
+      onKeyDown={handleKeyDown}
+      tabIndex={0}
+      role="link"
+      aria-label={`Open ${title} ${demo ? 'live demo' : 'source code'}`}
       whileHover={{ y: -8, scale: 1.01 }}
+      whileTap={{ scale: 0.99 }}
       transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-      className={`glass-card h-full flex flex-col overflow-hidden group relative z-10 ${isFlagship ? 'border-cyan-500/40 shadow-[0_0_30px_rgba(0,245,255,0.15)]' : 'border-slate-800/60 hover:border-slate-700'}`}
+      className={`glass-card h-full flex flex-col overflow-hidden group relative z-10 cursor-pointer select-none ${
+        isFlagship
+          ? 'border-cyan-500/40 shadow-[0_0_30px_rgba(0,245,255,0.15)]'
+          : 'border-slate-800/60 hover:border-slate-700'
+      }`}
       style={{
         borderColor: isFlagship ? undefined : `${color}25`,
       }}
     >
       {/* Animated glowing border top */}
-      <div className="absolute top-0 left-0 right-0 h-[2px] w-full transition-all duration-500"
+      <div
+        className="absolute top-0 left-0 right-0 h-[2px] w-full transition-all duration-500"
         style={{
           background: `linear-gradient(90deg, transparent, ${color}, transparent)`,
           boxShadow: `0 0 15px ${color}80`,
@@ -231,47 +386,100 @@ function ProjectCard({ project, isGithubOnly = false }) {
       />
 
       {/* Hover glow background */}
-      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none rounded-2xl -z-10"
-        style={{ background: `radial-gradient(circle at center 0%, ${color}15, transparent 60%)` }} />
+      <div
+        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none rounded-2xl -z-10"
+        style={{ background: `radial-gradient(circle at center 0%, ${color}15, transparent 60%)` }}
+      />
 
       <div className="p-7 flex flex-col flex-1 relative z-10">
-
         {/* -- Header: Icons & Badges -- */}
         <div className="flex flex-wrap items-start justify-between gap-4 mb-5">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3"
+            <div
+              className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3"
               style={{
                 background: `${color}15`,
                 border: `1.5px solid ${color}40`,
                 boxShadow: `0 0 20px ${color}30`,
-              }}>
+              }}
+            >
               <Icon size={24} style={{ color, filter: `drop-shadow(0 0 8px ${color}80)` }} />
             </div>
             {specialTag && (
-              <span className="text-xs font-bold px-3 py-1 rounded-full animate-pulse border"
-                style={{ color: '#fff', background: `${color}40`, borderColor: `${color}80`, boxShadow: `0 0 10px ${color}60` }}>
+              <span
+                className="text-xs font-bold px-3 py-1 rounded-full animate-pulse border"
+                style={{
+                  color: '#fff',
+                  background: `${color}40`,
+                  borderColor: `${color}80`,
+                  boxShadow: `0 0 10px ${color}60`,
+                }}
+              >
                 ✨ {specialTag}
               </span>
             )}
           </div>
 
           <div className="flex flex-wrap gap-2 justify-end">
-            {badges.map(badge => (
-              <span key={badge} className="text-[10px] font-mono tracking-wider font-bold px-2.5 py-1 rounded-full border bg-slate-900/80 backdrop-blur-md"
+            {badges.map((badge) => (
+              <span
+                key={badge}
+                className="text-[10px] font-mono tracking-wider font-bold px-2.5 py-1 rounded-full border bg-slate-900/80 backdrop-blur-md"
                 style={{
-                  color: badge === 'LIVE' ? '#10b981' : badge === 'FEATURED PROJECT' ? '#f59e0b' : '#94a3b8',
-                  borderColor: badge === 'LIVE' ? '#10b98140' : badge === 'FEATURED PROJECT' ? '#f59e0b40' : '#475569'
-                }}>
-                {badge === 'LIVE' ? '🟢 ' : ''}{badge}
+                  color:
+                    badge === 'LIVE'
+                      ? '#10b981'
+                      : badge === 'FEATURED PROJECT'
+                      ? '#f59e0b'
+                      : '#94a3b8',
+                  borderColor:
+                    badge === 'LIVE'
+                      ? '#10b98140'
+                      : badge === 'FEATURED PROJECT'
+                      ? '#f59e0b40'
+                      : '#475569',
+                }}
+              >
+                {badge === 'LIVE' ? '🟢 ' : ''}
+                {badge}
               </span>
             ))}
           </div>
         </div>
 
-        {/* -- Title & Description -- */}
-        <h3 className="text-xl md:text-2xl font-bold text-white leading-tight mb-4 group-hover:text-cyan-100 transition-colors duration-300">
-          {title}
-        </h3>
+        {/* -- Project Screenshot / Preview Thumbnail -- */}
+        {image && !imgError && (
+          <div className="relative w-full h-44 sm:h-48 md:h-52 rounded-xl overflow-hidden mb-5 border border-slate-700/50 bg-slate-950/80 group/img">
+            <img
+              src={image}
+              alt={`${title} project preview`}
+              loading="lazy"
+              onError={() => setImgError(true)}
+              className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+            />
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                background:
+                  'linear-gradient(to top, rgba(15,23,42,0.85) 0%, rgba(15,23,42,0.15) 50%, transparent 100%)',
+              }}
+            />
+          </div>
+        )}
+
+        {/* -- Title & Description with Link Indicator -- */}
+        <div className="flex items-center justify-between gap-3 mb-4">
+          <h3 className="text-xl md:text-2xl font-bold text-white leading-tight group-hover:text-cyan-100 transition-colors duration-300">
+            {title}
+          </h3>
+          {demo && (
+            <FaExternalLinkAlt
+              size={14}
+              className="opacity-0 group-hover:opacity-100 transition-all duration-300 transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 flex-shrink-0"
+              style={{ color }}
+            />
+          )}
+        </div>
 
         <p className="text-slate-300 text-sm md:text-base leading-relaxed mb-6">
           {shortDescription}
@@ -279,7 +487,9 @@ function ProjectCard({ project, isGithubOnly = false }) {
 
         {/* -- Detailed Features (Grid list) -- */}
         <div className="mb-6">
-          <p className="text-xs font-mono text-slate-500 mb-3 uppercase tracking-wider">// Key Features</p>
+          <p className="text-xs font-mono text-slate-500 mb-3 uppercase tracking-wider">
+            // Key Features
+          </p>
           <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2">
             {features.map((feature, idx) => (
               <li key={idx} className="flex items-start gap-2 text-xs md:text-sm text-slate-400">
@@ -290,19 +500,21 @@ function ProjectCard({ project, isGithubOnly = false }) {
           </ul>
         </div>
 
-        <div className="flex-1" /> {/* Spacer to push bottom elements down */}
+        <div className="flex-1" />
 
         {/* -- Tech Stack Tags -- */}
         <div className="mb-8">
           <div className="flex flex-wrap gap-2">
             {techStack.map((tech) => (
-              <span key={tech}
+              <span
+                key={tech}
                 className="text-xs font-mono px-3 py-1 rounded-md transition-all duration-300 hover:-translate-y-1"
                 style={{
                   color: color,
                   background: `${color}10`,
                   border: `1px solid ${color}30`,
-                }}>
+                }}
+              >
                 {tech}
               </span>
             ))}
@@ -310,14 +522,15 @@ function ProjectCard({ project, isGithubOnly = false }) {
         </div>
 
         {/* -- Action Buttons -- */}
-        <div className="flex flex-wrap items-center gap-4 mt-auto pt-4 border-t border-slate-800/60">
+        <div className="flex flex-wrap items-center gap-4 mt-auto pt-4 border-t border-slate-800/60 relative z-20">
           <motion.a
             href={github}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-300 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white shadow-[0_0_15px_rgba(255,255,255,0.05)] hover:shadow-[0_0_20px_rgba(255,255,255,0.15)]"
+            className="flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-300 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white shadow-[0_0_15px_rgba(255,255,255,0.05)] hover:shadow-[0_0_20px_rgba(255,255,255,0.15)] cursor-pointer"
           >
             <FaGithub size={16} />
             <span>View Source</span>
@@ -328,9 +541,10 @@ function ProjectCard({ project, isGithubOnly = false }) {
               href={demo}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-300 text-white"
+              className="flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-300 text-white cursor-pointer"
               style={{
                 background: `linear-gradient(135deg, ${color}90, ${color}40)`,
                 border: `1px solid ${color}`,
@@ -342,7 +556,6 @@ function ProjectCard({ project, isGithubOnly = false }) {
             </motion.a>
           )}
         </div>
-
       </div>
     </motion.div>
   );

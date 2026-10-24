@@ -11,7 +11,7 @@ const traits = [
 ];
 
 const stats = [
-  { number: '4+', label: 'Projects Built' },
+  { number: '7+', label: 'Projects Built' },
   { number: '8+', label: 'Technologies' },
   { number: '20+', label: 'Certificates' },
   { number: '∞', label: 'Curiosity' },
@@ -68,22 +68,22 @@ export default function About() {
 
               <div className="space-y-4 text-slate-300 leading-relaxed">
                 <p>
-                  Hello! I'm <span className="text-cyan-400 font-semibold">Yashraj Auti</span>, a Computer Engineering student passionate about software development, AI, automation, and problem-solving.
+                  Hello! I'm <span className="text-cyan-400 font-semibold">Yashraj Auti</span>, a Computer Engineering student passionate about software development, artificial intelligence, automation, and problem-solving.
                 </p>
                 <p>
-                  I enjoy building practical projects ranging from Java-based management systems to IoT and cloud-based solutions. My work includes projects like <span className="text-blue-400 font-semibold">Paper Paradox, Time Table Management System, Fire Detection Alarm System</span>, and various Java applications.
+                  I enjoy building practical applications that solve real problems. My projects include <span className="text-emerald-400 font-semibold">ConnectGov</span>, a government-services discovery platform; <span className="text-amber-400 font-semibold">IBVAP</span>, an AI-based video analytics project; and a <span className="text-cyan-400 font-semibold">College Timetable Management System</span> that explores automated academic scheduling. I have also worked on <span className="text-blue-400 font-semibold">Paper Paradox</span>, Java-based management systems, and an IoT-based Fire Detection Alarm System.
                 </p>
                 <p>
-                  I’m constantly learning new technologies, improving my development skills, and exploring innovative ideas in <span className="text-purple-400 font-semibold">web development, artificial intelligence, and sustainable digital systems</span>.
+                  I’m continuously learning new technologies and improving my skills in <span className="text-purple-400 font-semibold">web development, AI, software engineering, and cloud computing</span>. I enjoy exploring new ideas, understanding how systems work, and turning concepts into functional projects.
                 </p>
                 <p>
-                  Currently, I’m focused on strengthening my technical skills, building impactful projects, and preparing for <span className="text-pink-400 font-semibold">internships and software engineering opportunities</span> where I can learn, contribute, and grow as a developer.
+                  Currently, I’m focused on strengthening my technical foundation, expanding my project portfolio, and preparing for <span className="text-pink-400 font-semibold">internships and software engineering opportunities</span> where I can contribute, learn from real-world challenges, and grow as a developer.
                 </p>
               </div>
 
               {/* Tech Stack pills */}
               <div className="flex flex-wrap gap-2 mt-6">
-                {['Java', 'Python', 'HTML', 'CSS', 'JavaScript', 'React', 'Flask', 'MySQL', 'SQLite', 'Git & GitHub', 'Arduino'].map(tech => (
+                {['Java', 'Python', 'HTML', 'CSS', 'JavaScript', 'React', 'Next.js', 'Flask', 'MySQL', 'SQLite', 'Git & GitHub', 'Arduino'].map(tech => (
                   <span key={tech} className="text-xs font-mono px-3 py-1 rounded-full text-cyan-400"
                     style={{ background: 'rgba(0,245,255,0.08)', border: '1px solid rgba(0,245,255,0.2)' }}>
                     {tech}
